@@ -1,0 +1,33 @@
+{
+  "name": "mongo",
+  "version": "1.0.0",
+  "description": "Node.js application using MongoDB for user management with authentication. to learn how to create a RESTful API with Express and MongoDB, implement user authentication with bcrypt, and manage environment variables with dotenv. also includes CORS support for cross-origin requests. and nodemon for development. plus, it uses commonjs module system. also, it has a simple user model with username and password fields. then, it has basic routes for user registration and login.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "s": "npm install"
+  },
+  "keywords": [
+    " nodejs",
+    "mongodb",
+    "express",
+    "bcrypt",
+    "dotenv",
+    "cors",
+    "nodemon",
+    "commonjs"
+  ],
+  "author": "Saurabh Sir",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.4",
+    "nodemon": "^3.1.14"
+  }
+}
