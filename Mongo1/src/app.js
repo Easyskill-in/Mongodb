@@ -87,7 +87,7 @@ app.get("/Users", async (req, res) => {
         //     arr: ["A", "B", "C", "D"],
         //     address: {
         //         city: "Surat",
-        //         state: "Gujrat",
+        //         state: "Gujarat",
         //         pincode: 395005
         //     }
         // })
