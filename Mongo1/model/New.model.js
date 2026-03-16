@@ -2,16 +2,21 @@ const mongoose = require("mongoose")
 
 
 const NewSchema = new mongoose.Schema({
-    username: { type: String, require: true },
-    password: String,
-    email: String,
-    age: Number,
-    arr: [String],
-    address: {
-        city: String,
-        state: String,
-        pincode: Number
-    },
+    // username: { type: String, require: true },
+    // password: String,
+    // email: String,
+    // age: Number,
+    // arr: [String],
+    // address: {
+    //     city: String,
+    //     state: String,
+    //     pincode: Number
+    // },
+    name:String,
+    User : {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }
     // role: {
     //     type: String,
     //     enum: ["user", "admin", "manager"],

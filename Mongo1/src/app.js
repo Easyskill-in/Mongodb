@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+const bcrypt = require("bcrypt")
+
 const User = require('../model/User.model.js')
 const New = require('../model/New.model.js')
 
@@ -15,9 +17,12 @@ app.post("/submit", async (req, res) => {
     const { username, password, email, age } = req.body
     try {
 
+        const hasedPassword = await bcrypt.hash(password,10)//
+
+
         const newUser = new User({
             username,
-            password,
+            password:hasedPassword,
             email,
             age
         })
@@ -112,6 +117,119 @@ app.get("/Users", async (req, res) => {
             success: false,
             message: error.message
         })
+    }
+})
+
+
+
+app.post("/new",
+    async (req, res) => {
+        const
+        { username,
+            password,
+            email,
+            age } = req.body;
+            
+            const hasedPassword = await bcrypt.hash(password,10)
+        try {
+
+            const newUser = new User({
+                username,
+                password:hasedPassword,
+                email,
+                age
+            })
+
+    // newUser.username = "A";            
+
+            const result = await newUser.save()
+
+            const Ref = new New({
+                name:username+"New",
+                User:result._id
+            })
+
+            const res1 = await Ref.save()
+
+            res.json({
+                success:true,
+                data:{result,res1}
+            })
+
+
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            })
+        }
+    }
+)
+
+
+app.get("/New",async(req,res)=>{
+    try{
+        const result = await New.find({name:"BNew"}).populate({path:"User",select:"-email"})
+
+        res.json({
+            success:true,
+            message:"all Users",
+            data:result
+        })
+
+    }catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            })
+        }
+})
+
+
+app.post("/login",async(req,res)=>{
+    try {
+        const {username,password} = req.body;
+
+        // console.log(username,password)
+
+        if(!username || !password){
+            return res.json({
+                success:false,
+                message:"username and password both are required"
+            })
+        }
+
+        const MyUser = await User.findOne({username})
+        // console.log({MyUser})
+        if(!MyUser){
+            return res.json({
+                success:false,
+                message:"User not Found"
+            })
+        }
+
+        const isValid  = await bcrypt.compare(password,MyUser.password)
+
+        
+
+        if(!isValid){
+            return res.json({
+                success:false,
+                message:"Invalid Password"
+            })
+        }
+
+        res.json({
+            success:true,
+            message:"User Login",
+            data:{isValid,MyUser}
+        })
+
+    } catch (error) {
+         return res.status(500).json({
+                success: false,
+                message: error.message
+            })
     }
 })
 
